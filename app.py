@@ -33,7 +33,51 @@ features=balanced_df.drop(['ILLICIT'], axis=1)
 
 x_train, x_test, y_train, y_test = train_test_split(features, labels, test_size=0.1, random_state=42)
 
-x_test.to_csv('x_test.csv', index=False)
-x_train.to_csv('x_train.csv', index=False)
-y_test.to_csv('y_test.csv', index=False)
-y_train.to_csv('y_train.csv', index=False)
+scaler = StandardScaler()
+
+scaler.fit(x_train)
+
+x_train_norm = scaler.transform(x_train)
+x_test_norm = scaler.transform(x_test)
+
+def gridsearch_dit(models, params,train_x, train_y):
+  model_best=[]
+  accuracy_best=[]
+  for i in range(len(models)):
+    print(f'tour numero: {i}')
+    model=GridSearchCV(models[i], params[i], cv=5)
+    model.fit(train_x, train_y)
+    print(model.best_estimator_)
+    print(model.best_score_)
+    model_best.append(model.best_estimator_)
+    accuracy_best.append(model.best_score_)
+  return model_best, accuracy_best
+
+param_grid_rf = [
+    {'n_estimators':[10,30]},
+    {'max_depth':[2,5,7]}, 
+    {'max_features':[2,4,6]}, 
+    {'min_samples_leaf':[2,5,9,3]}
+]
+param_grid_knn= [
+    {'n_neighbors':[3,5,7,10,15,12,13,16,19,17,11]}
+]
+param_grid_log=[
+    {'max_iter':[10,100,120,5,90,80,85]}
+]
+
+classifiers =[]
+classifiers.append(RandomForestClassifier())
+classifiers.append(KNeighborsClassifier())
+classifiers.append(LogisticRegression())
+
+parametres=[]
+parametres.append(param_grid_rf)
+parametres.append(param_grid_knn)
+parametres.append(param_grid_log)
+
+best_model= gridsearch_dit(classifiers, parametres, X_train, Y_train)
+mod, accu = best_model
+for i in range(len(mod)):
+  if accu[i]== max(accu):
+    mod[i].save('model.h5')
