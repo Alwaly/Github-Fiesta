@@ -33,7 +33,7 @@ features=balanced_df.drop(['ILLICIT'], axis=1)
 
 x_train, x_test, y_train, y_test = train_test_split(features, labels, test_size=0.1, random_state=42)
 
-x_test.to_csv('x_test.csv', index=False)
-x_train.to_csv('x_train.csv', index=False)
-y_test.to_csv('y_test.csv', index=False)
-y_train.to_csv('y_train.csv', index=False)
+x_test.to_csv('${{ github.workspace }}/output/x_test.csv', index=False)
+x_train.to_csv('${{ github.workspace }}/output/x_train.csv', index=False)
+y_test.to_csv('${{ github.workspace }}/output/y_test.csv', index=False)
+y_train.to_csv('${{ github.workspace }}/output/y_train.csv', index=False)

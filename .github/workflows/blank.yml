@@ -25,4 +25,5 @@ jobs:
              pip install seaborn
       # Runs a set of commands using the runners shell
       - name: Run a multi-line script
-        run: python app.py
+        run: mkdir -p "${{ github.workspace }}/output"
+             python app.py
