@@ -32,6 +32,6 @@ jobs:
         run: |
               git config --global user.email "ndiayealwaly999@gmail.com"
               git config --global user.name "Alwaly"
-              git add dataset.zip model.pkl
+              git add datasets.zip model.pkl
               git commit -m "Add generated data files and model"
               git push origin main  
