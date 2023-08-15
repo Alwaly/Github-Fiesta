@@ -32,6 +32,6 @@ jobs:
         run: |
               git config --global user.email "ndiayealwaly999@gmail.com"
               git config --global user.name "Alwaly"
-              git add x_test.csv x_train.csv y_test.csv y_train.csv
+              git add model.pkl
               git commit -m "Add generated data files"
               git push origin main  
