@@ -10,7 +10,9 @@ from sklearn.preprocessing import LabelEncoder
 import zipfile
 import os
 
-os.makedirs('datasets')
+directory_name = 'datasets'
+if not os.path.exists(directory_name):
+    os.makedirs(directory_name)
 data = pd.read_csv("douanesDataset.csv")
 
 df = data.drop_duplicates()
