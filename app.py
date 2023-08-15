@@ -7,6 +7,8 @@ from sklearn.neighbors import KNeighborsClassifier
 from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import GridSearchCV
 from sklearn.preprocessing import LabelEncoder
+import zipfile
+import os
 
 data = pd.read_csv("douanesDataset.csv")
 
@@ -43,6 +45,23 @@ X_ = pd.DataFrame(X_, columns=continuous_features)
 X = pd.concat([X_,X], axis=1, ignore_index=True)
 
 x_train, x_test, y_train, y_test = train_test_split(X, Y, test_size=0.1, random_state=42)
+
+x_train.to_csv('datasets/x_train.csv', index=False)
+y_train.to_csv('datasets/y_train.csv', index=False)
+x_test.to_csv('datasets/x_test.csv', index=False)
+y_test.to_csv('datasets/y_test.csv', index=False)
+
+
+
+folder = 'datasets'
+output = f'{folder}.zip'
+with zipfile.ZipFile(output, 'w', zipfile.ZIP_DEFLATED) as zipf:
+    for root, _, files in os.walk(folder):
+      for file in files:
+          file_path = os.path.join(root, file)
+          arcname = os.path.relpath(file_path, folder)
+          zipf.write(file_path, arcname)
+
 
 def gridsearch_dit(models, params,train_x, train_y):
   model_best=[]
