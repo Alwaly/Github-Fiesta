@@ -10,6 +10,7 @@ from sklearn.preprocessing import LabelEncoder
 import zipfile
 import os
 
+os.makedirs('datasets')
 data = pd.read_csv("douanesDataset.csv")
 
 df = data.drop_duplicates()
